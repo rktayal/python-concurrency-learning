@@ -60,3 +60,48 @@ Below is an example for thread interference.
 <p align="center">
         <img src="./tmp/thread_interference.png"/>
 </p> <br />
+
+### Thread Synchronization
+Python has various mechanism to synchronize access to shared resources.
+#### threading.Lock
+The most fundamental of these is a lock.<br />
+It can be in one of the two states: locked or unlocked.<br />
+When locked by one thread, it can only be unlocked by the same thread.<br />
+When a thread tries to acquire a lock that is already acquired, that thread goes into a blocking state,
+which means its execution is paused and can't continue until the lock is released by the owning thread.<br />
+We can use locking mechanism to synchronize access to shared resource. 
+```
+lock = threading.Lock()
+lock.acquire()
+try:
+    ... access the shared resource ...
+finally:
+    lock.release()
+```
+By putting the `release` in finally block, we ensure that it is executed even if an exception 
+is thrown, else the lock may never be released and cause the waiting threads to wait forever.
+Same can be done using below syntax:
+```
+lock = threading.Lock()
+with lock:
+    ... access shared resource ...
+```
+the lock is automatically acquired and released when leaving.
+Other lock APIs are
+```
+if lock.acquire(False):
+    ... Lock acquired, do stuff with lock
+else:
+    ... could not acquire lock, do other stuff
+```
+The `lock.locked()` method allows the called to determine whether the lock has been acquired or not
+```
+if lock.locked():
+    ... do other stuff
+else:
+    lock.acquire()
+```
+
+### threading.Semaphore
+
+    
