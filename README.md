@@ -81,3 +81,10 @@ Thumbnail Maker Workflow
 - Download the image from the source location
 - Perform the resize operation
 The Download operation is an IO bound task, while the resize is a CPU bound task.
+
+`thumbnail_maker.py` defines ThumbnailMakerService Class. In its initializer, we define the 
+input directory (where list of input images will be downloaded) and the output directory (where resized images will be stored)
+`download_images` takes list of image urls to be downloaded
+`performs_resizing` resizes the image into target sizes
+`make_thubnails` is the public interface for Thumbnail Maker Service. It takes the image url list and calls the 
+methods needed to complete the resizing operation.
