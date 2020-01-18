@@ -41,3 +41,14 @@ threading.Thread(group=None,
                  kwargs={},
                  daemon=None)
 ```
+
+### Working of Threads
+Image below shows the execution flow of multi-threaded program
+<p align="center">
+        <img src="./tmp/thread_working.png"/>
+</p> <br />
+
+A Thread can be in one of the following states:
+<p align="center">
+        <img src="./tmp/thread_lifecycle.png" />
+</p> <br />
