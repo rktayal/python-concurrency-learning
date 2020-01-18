@@ -33,6 +33,11 @@ The two main forms of concurrency that we'll focus on this article are:
 Parallel Programming involves taking a computational task and splitting it into smaller subtasks
 that are then assigned to multiple threads or processes to be executed on multiple processor cores
 simultaneously. <br />
+
+<p align="center">
+	<img src="./img/parallel_programming.png" height="250"/>
+</p> <br />
+
 Parallel programming is best suited for tasks that are CPU intensive example: graphics processing,
 search algorithms, string operations etc.
 
@@ -44,6 +49,11 @@ programming. examples are database read and writes, web service calls, copying o
 
 ### Concurrency in Python
 Python supports both parallel and asynchronous programming natively. <br />
+
+<p align="center">
+	<img src="./img/concurrency_in_python.png" width="700" />
+</p> <br />
+
 The threading module was introduced way back in Python 1.5, and allows us to create
 thread objects that are mapped to native operating system threads, and can be used for 
 concurrent execution of code.
@@ -61,7 +71,11 @@ And finally in Python 3.4, the asyncio module was introduced as a provisional pa
 
 ### Demo Application - Thumbnail Maker Library
 The function of this library is that it takes image of certain size and produces smaller copies
-of the original image, while keeping the dimensions intact.
+of the original image, while keeping the dimensions intact.<br />
+
+<p align="center">
+	<img src="./img/thumbnail_maker.png" width="500"/>
+</p> <br />
 
 Thumbnail Maker Workflow
 - Download the image from the source location
