@@ -80,11 +80,33 @@ of the original image, while keeping the dimensions intact.<br />
 Thumbnail Maker Workflow
 - Download the image from the source location
 - Perform the resize operation
-The Download operation is an IO bound task, while the resize is a CPU bound task.
+The Download operation is an IO bound task, while the resize is a CPU bound task.<br />
 
-`thumbnail_maker.py` defines ThumbnailMakerService Class. In its initializer, we define the 
-input directory (where list of input images will be downloaded) and the output directory (where resized images will be stored)
-`download_images` takes list of image urls to be downloaded
-`performs_resizing` resizes the image into target sizes
-`make_thubnails` is the public interface for Thumbnail Maker Service. It takes the image url list and calls the 
+`thumbnail_maker_single_threaded.py` defines `ThumbnailMakerService` Class. In its initializer, we define the 
+input directory (where list of input images will be downloaded) and the output directory 
+(where resized images will be stored) <br />
+It has the following three methods:
+- `download_images` takes list of image urls to be downloaded and downloads them sequentially
+- `performs_resizing` resizes the image into target sizes one-by-one.
+- `make_thubnails` is the public interface for Thumbnail Maker Service. It takes the image url list and calls the 
 methods needed to complete the resizing operation.
+
+`test_thumbnail_maker.py` is the utitlity script to test various implementations of our thumbnail maker service
+### Running single threaded Thumbnail maker
+```
+python test_thumbnail_maker.py
+```
+After running, it will download images into `incoming` directory and resize the images and store them in `outgoing`
+directory with various target sizes i.e (32, 64 and 200). It will generate the logfile which will show us the time
+taken to process the `download_images` method and the `performs_resizing` method.
+```
+Log  thumbnail_maker_single_threaded.py
+
+INFO:root:START make_thumbnails
+INFO:root:beginning image downloads
+INFO:root:downloaded 26 images in 40.599753213999996 seconds
+INFO:root:beginning image resizing
+INFO:root:created 26 thumbnails in 3.765793731999999 seconds
+INFO:root:END make_thumbnails in 44.366740209 seconds
+```
+
