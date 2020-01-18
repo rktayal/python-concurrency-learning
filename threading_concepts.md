@@ -52,3 +52,11 @@ A Thread can be in one of the following states:
 <p align="center">
         <img src="./tmp/thread_lifecycle.png" />
 </p> <br />
+
+Threads within a process share code, common memory space and other OS resources such as open files
+or network sockets. Therefore any memory owned by process can be modified by any of the thread.
+Memory sharing combined with indeterminate scheduling can lead to suitation known as thread interference.
+Below is an example for thread interference.
+<p align="center">
+        <img src="./tmp/thread_interference.png"/>
+</p> <br />
