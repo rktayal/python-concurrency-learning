@@ -199,3 +199,6 @@ t2 = Thread(target=consumer, args=(queue,))
 t1.start()
 t2.start()
 ```
+In above example, both the `get` and `put` calls are blocking calls.
+`get` call will block, if there are no items in the Queue. The thread making
+the get call will block until the new item is put in Queue for it to read.
