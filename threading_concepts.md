@@ -63,7 +63,7 @@ Below is an example for thread interference.
 
 ### Thread Synchronization
 Python has various mechanism to synchronize access to shared resources.
-#### threading.Lock
+### threading.Lock
 The most fundamental of these is a lock.<br />
 It can be in one of the two states: locked or unlocked.<br />
 When locked by one thread, it can only be unlocked by the same thread.<br />
@@ -103,5 +103,70 @@ else:
 ```
 
 ### threading.Semaphore
+Another widely used thread synchronization mechanism is the semaphore.
+```
+semaphore = threading.Semaphore()
 
-    
+semaphore.acquire() # decrements the counter
+... access the shared resource
+semaphore.release() # increments the counter
+```
+The internal counter can never go below 0, so if a thread makes a call
+to acquire, and the value of counter is 0, the thread gets blocked and 
+must wait for another thread to call release. <br />
+A common analogy is that the semaphore maintains a set of permits.
+```
+num_permits = 3
+semaphore = threading.BoundedSemaphore(num_permits)
+
+semaphore.acquire() # decrements the counter
+... upto 3 threads can access the shared resource at a time ...
+semaphore.release() # increments the counter
+```
+Standard semaphore allows us to call `release` unlimited number of times,
+more times than we called `acquire`. <br />
+With `BoundedSemaphore`, if we inadvertenly try to call `release` more times
+than we have called acquire, an error will be thrown. <br />
+
+### threading.Event
+One thread signals the event and the other thread waits for it. <br />
+Event object has an internal flag. <br />
+the thread or threads that need to wait for the event to occur do so
+by calling the wait method on the event. As long as event's internal flag 
+is `False`, the threads that call `wait` will block. A manager or server thread
+can then call the set method on the event, which sets the internal flag to `True`
+and releases the block thread or threads.
+```
+event = threading.Event()
+
+# a client thread can wait for the thread to be set
+event.wait()  # blocks if flag is false
+
+# a server thread can set or reset it
+event.set()    # sets the flag to true
+event.clear()  # resets the flag to false
+```
+
+### threading.Condition
+Condition combines the property of a lock and an event.
+Like a lock it has `acquire()` and `release()` method to synchronize
+access to some shared state, and like an event it has `wait()`, `notify()`,
+and `notify_all()` methods so that threads interested in knowing when the
+state changes can call the wait method and can be notified when the condition changes.<br />
+Typical use case is Producer-Consumer Pattern. <br />
+```
+cond = Condition()
+
+# Consume one item
+cond.acquire()
+while not is_item_available():
+    cond.wait()
+get_an_available_item()
+cond.release()
+
+# Produce one item
+cond.acquire()
+make_an_item_available()
+cond.notify()
+cond.release()
+```
