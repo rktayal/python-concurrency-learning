@@ -170,3 +170,32 @@ make_an_item_available()
 cond.notify()
 cond.release()
 ```
+
+### Inter Thread communication using Queues
+Queue makes it easier to exchange messages b/w multiple threads. It 
+handles all the locking semantics for us and allows us to focus on 4 methods:
+- put(): Put an item in the queue
+- get(): Removes an item from queue and returns it
+- task_done(): Marks an item that was gotten from the queue as completed/processed.
+- join(): blocks until all the items in the queue have been processed.
+```
+from threading import Thread
+from queue import Queue
+
+def producer():
+    for i in range(10):
+        item = make_an_item_available(i)
+        queue.put(item)
+
+def consumer():
+    while True:
+        item = queue.get()
+        # do something with item
+        queue.task_done() # mark item as done
+
+queue = Queue()
+t1 = Thread(target=producer, args=(queue,))
+t2 = Thread(target=consumer, args=(queue,))
+t1.start()
+t2.start()
+```
