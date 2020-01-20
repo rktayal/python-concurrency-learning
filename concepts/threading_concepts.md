@@ -3,7 +3,7 @@ Every execution process has system resources and a section of memory that is ass
 one or more threads of execution.<br />
 
 <p align="center">
-        <img src="./tmp/process_vs_thread.png" height="250"/>
+        <img src="../tmp/process_vs_thread.png" height="250"/>
 </p> <br />
 
 A thread is the smallest sequence of instructions that can be managed, that is scheduled 
@@ -45,12 +45,12 @@ threading.Thread(group=None,
 ### Working of Threads
 Image below shows the execution flow of multi-threaded program
 <p align="center">
-        <img src="./tmp/thread_working.png"/>
+        <img src="../tmp/thread_working.png"/>
 </p> <br />
 
 A Thread can be in one of the following states:
 <p align="center">
-        <img src="./tmp/thread_lifecycle.png" />
+        <img src="../tmp/thread_lifecycle.png" />
 </p> <br />
 
 Threads within a process share code, common memory space and other OS resources such as open files
@@ -58,7 +58,7 @@ or network sockets. Therefore any memory owned by process can be modified by any
 Memory sharing combined with indeterminate scheduling can lead to suitation known as thread interference.
 Below is an example for thread interference.
 <p align="center">
-        <img src="./tmp/thread_interference.png"/>
+        <img src="../tmp/thread_interference.png"/>
 </p> <br />
 
 ### Thread Synchronization
