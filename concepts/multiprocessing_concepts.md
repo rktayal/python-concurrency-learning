@@ -4,7 +4,7 @@ GIL blocking multiple instructions from running simultaneously on different core
 copies of process.
 
 <p align="center">
-	<img src="./tmp/gil_per_process.png" width="600" />
+	<img src="../tmp/gil_per_process.png" width="600" />
 </p> <br />
 
 ### Multiprocessing API
@@ -127,7 +127,7 @@ if __name__ == "__main__":
     p2.start()
 ```
 <p align="center">
-	<img src="./tmp/pipe.png" width="600" />
+	<img src="../tmp/pipe.png" width="600" />
 </p> <br />
 The Pipe is a fairly simple construct with no built-in locking or 
 consistency guarantees. Two processes trying to write to the same end
@@ -135,7 +135,7 @@ of the pipe can cause data in the pipe to become corrupted. For this,
 the multiprocessing queue is the more common method of interprocess 
 communication.<br />
 <p align="center">
-	<img src="./tmp/pipe_vs_queue.png" width="600" />
+	<img src="../tmp/pipe_vs_queue.png" width="600" />
 </p> <br />
 The multiprocessing queue uses a pipe, as well as few locks
 and semaphores behind the scenes for process safety. <br />
@@ -178,6 +178,6 @@ synchronization primitives in the threading module. Therefore when synchornizing
 between processes we should use the primitives for the multiprocessing module in
 place of the threading version. 
 <p align="center">
-	<img src="./tmp/process_sync.png" width="600" />
+	<img src="../tmp/process_sync.png" width="600" />
 </p> <br />
 
