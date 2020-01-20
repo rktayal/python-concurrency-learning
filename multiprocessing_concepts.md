@@ -90,4 +90,77 @@ as the target function to the process pool. Therefore both the target function a
 must be picklable. `map()` method is a blocking call. `map_async()` is the non-blocking version
 for the same.
 
+The pool class also has a `apply` and `apply_async` methods, which allows
+us to pass a function and its args to be executed in one of the workers in 
+the process pool.
+`apply(func[, args[, kwargs]])`
+
+### Inter process Communication
+processes must use OS supported data channels if they want to exchange data
+with each other. The two communication channels implemented in Python are
+- Pipes
+- Queue
+
+The multiprocessing pipe involves two connection objects, which represents
+two ends of a pipe. A process can write to one of the pipe, while another 
+process reads from the other end and vice versa. By default, pipe is duplex, which
+means pipe is bidirectional. Here's the example:
+```
+def make_tuple(conn):
+    num = random.randint(1, 9)
+    conn.send(('Hi', num))
+    print(conn.recv())
+    
+def make_string(conn):
+    tup = conn.recv()
+    result = "
+    substr, num = tup
+    for _ in range(num):
+        result += substr
+    conn.send(result)
+    
+if __name__ == "__main__":
+    conn1, conn2 = Pipe(True)
+    p1 = Process(target=make_tuple, args=(conn1,))
+    p2 = Process(target=make_string, args=(conn2,))
+    p1.start()
+    p2.start()
+```
+<p align="center">
+	<img src="./tmp/pipe.png" width="600" />
+</p> <br />
+The Pipe is a fairly simple construct with no built-in locking or 
+consistency guarantees. Two processes trying to write to the same end
+of the pipe can cause data in the pipe to become corrupted. For this, 
+the multiprocessing queue is the more common method of interprocess 
+communication.<br />
+<p align="center">
+	<img src="./tmp/pipe_vs_queue.png" width="600" />
+</p> <br />
+The multiprocessing queue uses a pipe, as well as few locks
+and semaphores behind the scenes for process safety. <br />
+multiprocessing.queue implements all methods of threading.queue like
+`qsize(), put(), get(), empty() full()` with the exception of `join() and task_done()` <br />
+To illustrate working of queue, let's rewrite above example:
+```
+def make_tuple(queue):
+    num = random.randint(1,9)
+    queue.put(('Hi', num))
+    print(queue.get())
+    
+def make_string(queue):
+    tup = queue.get()
+    result = "
+    substr, num = tup
+    for _ in range(num):
+        result += substr
+    queue.put(result)
+    
+if __name__ == "__main__":
+    queue = Queue()
+    p1 = Process(target=make_tuple, args=(queue,))
+    p2 = Process(target=make_string, args=(queue,))
+    p1.start()
+    p2.start()
+```
 
