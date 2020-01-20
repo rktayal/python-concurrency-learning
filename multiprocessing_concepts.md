@@ -142,6 +142,7 @@ and semaphores behind the scenes for process safety. <br />
 multiprocessing.queue implements all methods of threading.queue like
 `qsize(), put(), get(), empty() full()` with the exception of `join() and task_done()` <br />
 To illustrate working of queue, let's rewrite above example:
+
 ```
 def make_tuple(queue):
     num = random.randint(1,9)
