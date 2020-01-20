@@ -165,3 +165,19 @@ if __name__ == "__main__":
     p2.start()
 ```
 
+### Sharing State between Processes
+Although it is best to keep shared state to minimum, because manipulating
+shared state can be error prone & require a lot of synchronization steps.
+The two options for sharing state b/w processes in Python are: 
+- Shared Memory
+- Manager Process
+
+### Process Synchronization
+The multiprocessing module contains process-enabled equivalents of all of the 
+synchronization primitives in the threading module. Therefore when synchornizing
+between processes we should use the primitives for the multiprocessing module in
+place of the threading version. 
+<p align="center">
+	<img src="./tmp/process_sync.png" width="600" />
+</p> <br />
+
