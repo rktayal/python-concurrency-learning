@@ -202,3 +202,18 @@ t2.start()
 In above example, both the `get` and `put` calls are blocking calls.
 `get` call will block, if there are no items in the Queue. The thread making
 the get call will block until the new item is put in Queue for it to read.
+
+### Python Global Interpreter Lock (GIL)
+#### Upside of GIL
+Python threading is recommended to use only in IO bound operations. The reason for this is GIL.
+The GIL is a lock within the interpreter code that prevents multiple native threads from simultaneously
+executing Python code.
+Python interpreters that are not thread safe (like CPython), the GIL exists to proctect internal data 
+structures from thread interference and race conditions. This allows easy integration with C libraries
+that typically aren't thread safe.
+It also allows single threaded program to run must faster, since with single lock on interpreter there is 
+no need to relase & acquire lock on internal data structures individually.
+#### Downside of GIL
+Only one Python thread can execute at a time. So instead of having true concurrency, which is multiple threads
+running at the exact same time on different processor cores, what we have is cooperative multithreading, where 
+thread allow each other take turns to run on the same core. 
