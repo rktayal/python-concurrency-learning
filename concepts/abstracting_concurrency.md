@@ -33,7 +33,7 @@ execute is shutdown, any subsequent call to submit or map on it will result in r
 The wait parameter specifies whether the call should block or not.
 if set then call is blocking else it is non-blocking call. <br/><br/>
 
-Working Example:
+Working Example of ThreadPoolExecutor:
 ```
 from concurrent.futures import ThreadPoolExecutor
 from urllib.request import urlopen
@@ -54,4 +54,23 @@ with ThreadPoolExecutor(max_workers=2) as executor:
         print("{} page is {} bytes".format(url2, len(data2)))
     except Exception as e:
         print('Exception downloading page" + str(e))
+```
+
+
+Working Example of ProcessPoolExecutor
+```
+from concurrent.futures import ProcessPoolExecutor
+import hashlib
+
+texts = [b"the quick brown fox jumped over the lazy dog",
+         b"the big fat panda sat on the hungry snake",
+         b"the slick mountain lion ran up the tall tree"]
+
+def generate_hash(text):
+    return hashlib.sha384(text).hexdigest()
+
+if __name__ == "__main__":
+    with ProcessPoolExecutor() as executor:
+        for text, hash_t in zip(texts, executor.map(generate_hash, texts)):
+            print("%s hash is %s" % (text, hash_t))
 ```
