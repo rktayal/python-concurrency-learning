@@ -109,4 +109,24 @@ INFO:root:beginning image resizing
 INFO:root:created 26 thumbnails in 3.765793731999999 seconds
 INFO:root:END make_thumbnails in 44.366740209 seconds
 ```
+### The Future Object
+A future object is an object that acts a proxy for the result that is yet to be
+computed, typically because a computation of its value is not yet complete. <br/>
+In Python, a future object enables asynchronous programming. The executor represents
+the actor and immediately returns the future object so that the main thread is not 
+blocked and can go on doing other things.
+```
+future = executor.submit(func, args)
+... do other things ...
+result = future.result()
+```
+Various methods of future objects are:
+- `cancel()` Attemps to cancel execution. Return True if successful
+- `done()` returns True if completed or cancelled
+- `exception(timeout=None)` returns the exception raised, if any
+- `add_done_callback(fn)` attaches function to be called on completion or cancellation
+- The `concurrent.futures.wait(fs, timeout=None, return_when=ALL_COMPLETED)` takes in an iterable
+of future objects and blocks until the futures are completed.
+- The `concurrent.futures.as_completed(fs, timeout=None)` takes a group of future objects and
+returns iterator that yield futures as they complete
 
